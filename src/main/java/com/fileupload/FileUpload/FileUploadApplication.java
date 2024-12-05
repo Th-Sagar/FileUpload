@@ -14,5 +14,4 @@ public class FileUploadApplication {
 		System.setProperty("DB_DATABASE",dot.get("DB_DATABASE"));
 		SpringApplication.run(FileUploadApplication.class, args);
 	}
-
 }
