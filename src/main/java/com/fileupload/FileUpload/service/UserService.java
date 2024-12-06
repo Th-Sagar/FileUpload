@@ -22,13 +22,26 @@ public class UserService {
     }
 
     public String update(String id, UserModel model) {
-        ObjectId obj = new ObjectId(id);
         UserModel userExist = repo.findById(id);
-        if(userExist!=null){
             userExist.setPassword(model.getPassword());
             repo.save(userExist);
             return "User updated successfully";
-        }
-        return "User not found";
+    }
+
+
+
+
+    public UserModel findById(String id) {
+        return repo.findById(id);
+    }
+
+    public UserModel findByUserName(String userName) {
+        return repo.findByUserName(userName);
+    }
+
+    public String deleteOneUser(String id) {
+        ObjectId objectId = new ObjectId(id);
+        repo.deleteById(objectId);
+        return "User deleted ";
     }
 }
