@@ -28,9 +28,6 @@ public class UserService {
             return "User updated successfully";
     }
 
-
-
-
     public UserModel findById(String id) {
         return repo.findById(id);
     }
@@ -44,4 +41,5 @@ public class UserService {
         repo.deleteById(objectId);
         return "User deleted ";
     }
+
 }
