@@ -43,4 +43,21 @@ public class UserService {
         return "User deleted ";
     }
 
+    public String removeArray(String id, String fileUrl) {
+        UserModel userExist = repo.findById(id);
+
+        if(userExist!=null){
+            List<String> fileUrls= userExist.getFileUrls();
+            if(fileUrls!=null && fileUrls.contains(fileUrl)){
+                fileUrls.remove(fileUrl);
+                userExist.setFileUrls(fileUrls);
+                repo.save(userExist);
+                return "URL removed successfully";
+            }else {
+                return "URL not found in the user's fileUrls";
+            }
+
+        }
+        return "User not found";
+    }
 }
