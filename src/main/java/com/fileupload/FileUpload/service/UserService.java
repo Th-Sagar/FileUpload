@@ -24,6 +24,7 @@ public class UserService {
     public String update(String id, UserModel model) {
         UserModel userExist = repo.findById(id);
             userExist.setPassword(model.getPassword());
+            userExist.setFileUrls(model.getFileUrls());
             repo.save(userExist);
             return "User updated successfully";
     }

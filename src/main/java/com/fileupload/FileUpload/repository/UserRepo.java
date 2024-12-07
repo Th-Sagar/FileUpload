@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepo extends MongoRepository<UserModel, ObjectId> {
     boolean findAllById(ObjectId id);
-
     UserModel findById(String id);
     UserModel findByUserName(String userName);
 }
