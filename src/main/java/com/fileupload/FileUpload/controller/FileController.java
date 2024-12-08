@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/file")
+
 public class FileController {
 
 

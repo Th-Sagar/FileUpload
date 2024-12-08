@@ -4,6 +4,8 @@ import com.fileupload.FileUpload.model.UserModel;
 import com.fileupload.FileUpload.repository.UserRepo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +15,22 @@ public class UserService {
     @Autowired
     private UserRepo repo;
 
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+
     public String addUser(UserModel model) {
+        UserModel userExist = repo.findByUserName(model.getUserName());
+        if(userExist!=null){
+            return "User is already existed";
+
+
+        }
+
+
+        model.setPassword(encoder.encode(model.getPassword()));
         repo.save(model);
         return "User is created Successfully";
+
     }
     public List<UserModel> showAllUser(){
         return repo.findAll();

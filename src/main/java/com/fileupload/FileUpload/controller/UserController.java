@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -20,10 +21,15 @@ public class UserController {
         UserModel user = service.findByUserName(model.getUserName());
         if(user!=null){
             return new ResponseEntity<>("User already created",HttpStatus.BAD_REQUEST);
+
+
         }
+
         String msg = String.valueOf(service.addUser(model));
         System.out.println(model.getUserName());
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
+
+
     }
 
 
