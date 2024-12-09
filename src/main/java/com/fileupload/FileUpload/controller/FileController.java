@@ -8,15 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/file")
-
 public class FileController {
-
 
     @Autowired
     private FileService service;
@@ -39,7 +36,6 @@ public class FileController {
         return new ResponseEntity<>("file uploaded and url added to user successfully", HttpStatus.OK);
     }
 
-
     @DeleteMapping("/file-delete/{id}")
     public ResponseEntity<String> deleteUrl(@PathVariable String id , @RequestParam String fileUrl){
         UserModel userExist = userService.findById(id);
@@ -49,11 +45,5 @@ public class FileController {
         service.removeImage(fileUrl);
         String msg = String.valueOf(userService.removeArray(id,fileUrl));
         return new ResponseEntity<>(msg,HttpStatus.OK);
-
-
-
     }
-
-
-
 }
