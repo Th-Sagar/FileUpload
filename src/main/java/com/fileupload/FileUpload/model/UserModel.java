@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -55,4 +56,6 @@ public class UserModel {
     public void setFileUrls(List<String> fileUrls) {
         this.fileUrls = fileUrls;
     }
+
+
 }

@@ -21,15 +21,18 @@ public class UserController {
         UserModel user = service.findByUserName(model.getUserName());
         if(user!=null){
             return new ResponseEntity<>("User already created",HttpStatus.BAD_REQUEST);
-
-
         }
 
         String msg = String.valueOf(service.addUser(model));
         System.out.println(model.getUserName());
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
 
+    }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserModel model){
+        String msg = service.verifyUser(model);
+        return new ResponseEntity<>(msg,HttpStatus.OK);
     }
 
 
