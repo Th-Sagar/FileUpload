@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody UserModel model){
-        String msg = service.verifyUser(model);
+        String msg = String.valueOf(service.verifyUser(model));
         return new ResponseEntity<>(msg,HttpStatus.OK);
     }
 

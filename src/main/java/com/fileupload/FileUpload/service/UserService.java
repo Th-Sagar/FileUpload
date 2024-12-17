@@ -4,16 +4,26 @@ import com.fileupload.FileUpload.model.UserModel;
 import com.fileupload.FileUpload.repository.UserRepo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepo repo;
+
+    @Autowired
+    private AuthenticationManager authManager;
+
+    @Autowired
+    private JwtService jwtService;
 
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
@@ -70,7 +80,15 @@ public class UserService {
         return "User not found";
     }
 
-    public String verifyUser(UserModel model) {
+    public ResponseEntity<String> verifyUser(UserModel model) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(model.getUserName(),model.getPassword()));
+
+        Optional<UserModel> userExiste = repo.findByEmail(model.getEmail());
+
+        if(authentication.isAuthenticated() && userExiste.isPresent()){
+            return new ResponseEntity<>(jwtService.generateToken(model.getUserName()), HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Fail to login",HttpStatus.NOT_FOUND);
 
     }
 }
