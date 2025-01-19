@@ -31,7 +31,10 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody UserModel model){
-        String msg = String.valueOf(service.verifyUser(model));
+        String msg = service.verifyUser(model);
+        if(msg==null){
+            return new ResponseEntity<>("Invalid credentials",HttpStatus.UNAUTHORIZED);
+        }
         return new ResponseEntity<>(msg,HttpStatus.OK);
     }
 

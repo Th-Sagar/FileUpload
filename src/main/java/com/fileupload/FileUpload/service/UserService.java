@@ -80,15 +80,15 @@ public class UserService {
         return "User not found";
     }
 
-    public ResponseEntity<String> verifyUser(UserModel model) {
+    public String verifyUser(UserModel model) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(model.getUserName(),model.getPassword()));
 
         Optional<UserModel> userExiste = repo.findByEmail(model.getEmail());
 
         if(authentication.isAuthenticated() && userExiste.isPresent()){
-            return new ResponseEntity<>(jwtService.generateToken(model.getUserName()), HttpStatus.FOUND);
+            return jwtService.generateToken(model.getUserName());
         }
-        return new ResponseEntity<>("Fail to login",HttpStatus.NOT_FOUND);
+        return null;
 
     }
 }
